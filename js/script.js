@@ -142,51 +142,60 @@ $('#other-title, #color, .total-calc, #paypal, #bitcoin').hide();
   };
   hideErrorMsg();
 
-  //validate on keyup
-  function checkIfValid(fieldClass, errorId, numA, msg1, msg2, regEx) {
+  //***FOR EXCEEDS function to validate on keyup */
+  //***FOR EXCEEDS change message depending on the error */
+  function checkIfValid(fieldClass, errorId, num, msg1, msg2, regEx) {
     $(fieldClass).on('keyup', function() {
       hideErrorMsg();
-      if($(this).val().length < numA) {
+      if($(this).val().length < num) {
         $(errorId).text(msg1).fadeIn();
       }else if(!($(this).val()).match(regEx)) {
         $(errorId).text(msg2).show();
       }
     })
   }
+  //real-time validation of name field
   checkIfValid('#name', '#errorName', 1, 'Please enter your name', 'Please enter a valid name', /^([a-zA-Z]+)?$/);
+  //real-time validation of email field
   checkIfValid('#mail', '#errorMail', 1,'Please enter your email address', 'Please enter a valid email address', /^[^@]+@[^@.]+\.[a-z]+$/i);
+  //real-time validation of credit card number field
   checkIfValid('#cc-num', '#errorCcNum',1, 'Please enter your credit card details', 'Please enter a valid credit card number', /^(\d{13,16})?$/);
+  //real-time validation of zip code field
   checkIfValid('#zip', '#errorZip',1,'Required','Invalid postcode', /^(\d{5})?$/);
+  //real-time validation of cvv field
   checkIfValid('#cvv', '#errorCvv',1,'Required','Invalid number', /^(\d{3})?$/);
 
 
-  // form authentication on submit
+  // form validation on submit
   $('form').submit(function(e) {
     e.preventDefault();
-    let nameInput = $('#name').val();
+
+    // function to check submitted fields
+    function checkSubmit(input, num, errorMsg) {
+      if($(input).val().length < num) {
+        $(input).css({"border-color":"#fd8267"});
+        $(errorMsg).show();
+      }
+    }
+    
+    // validate name field 
+    checkSubmit('#name', 1, '#errorName')
+    //validate email field 
     let emailInput = $('#mail').val();
-    let ccNumInput = $('#cc-num').val();
-    let ccZipInput = $('#zip').val();
-    let cvvInput = $('#cvv').val();
-    // error message for name field 
-    if(nameInput.length < 1) {
-      $('#name').css({"border-color":"#fd8267"});
-      $('#errorName').show();
-    } 
-     // error message for email field 
     if(emailInput.length < 1) {
       $('#mail').css({"border-color":"#fd8267"});
       $('#errorMail').show();
     } else if(!(emailInput).match(/^[^@]+@[^@.]+\.[a-z]+$/i)) {
         $('#errorMail').text('**Please enter a valid email**').show();
     };
-    //error message for activities
+    //validate at least one activity is checked
     if($('.activities input:checked').length > 0) {
       $('#errorAct').hide();
     }else {
       $('#errorAct').show();
     }
-     // error messages for credit card fields 
+     //validate credit card fields 
+    let ccNumInput = $('#cc-num').val();
     if($('#payment').val()==='credit card') {
       if(ccNumInput.length <1) {
         $('#cc-num').css({"border-color":"#fd8267"});
@@ -195,18 +204,12 @@ $('#other-title, #color, .total-calc, #paypal, #bitcoin').hide();
         $('#cc-num').css({"border-color":"#fd8267"});
         $('#errorCcNum').text('**Please enter a valid credit card**').show();
       }
-      if(ccZipInput.length <5) {
-        $('#zip').css({"border-color":"#fd8267"});
-        $('#errorZip').show();
-      }
-      if(cvvInput.length <3) {
-        $('#cvv').css({"border-color":"#fd8267"});
-        $('#errorCvv').show();
-      }
+      checkSubmit('#zip', 5, '#errorZip');
+      checkSubmit('#cvv',3,'#errorCvv');
     }
   });
 
-  // reset form error messages
+  // reset form error messages on new input
   $('#name, #mail, #cc-num, #zip, #cvv').on('click', function() {
     $(this).val('').css({"border-color":"#679cb3", "color":"#184f68" });
     hideErrorMsg();
