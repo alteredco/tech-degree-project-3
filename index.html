@@ -7,7 +7,7 @@
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src='./js/script.js'></script>
-  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato|Roboto" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -23,10 +23,11 @@
       <fieldset>         
         <legend>Basic Info</legend>
         
-        <label for="name">Name:</label>
+        <label for="name">Name:</label> 
         <input type="text" id="name" name="user_name">
         
         <label for="mail">Email:</label>
+        <p class='is-hidden error'></p>
         <input type="email" id="mail" name="user_email">
         
         <label for="title">Job Role</label>
@@ -73,7 +74,6 @@
             <option value="steelblue">Steel Blue (I &#9829; JS shirt only)</option> 
             <option value="dimgrey">Dim Grey (I &#9829; JS shirt only)</option> 
           </select>
-            <p class='is-hidden'>Please select a T-shirt theme</p>
         </div>                
       </fieldset>
 
@@ -86,7 +86,6 @@
         <label><input type="checkbox" name="node"> Node.js Workshop — Tuesday 1pm-4pm, $100</label>          
         <label><input type="checkbox" name="build-tools"> Build tools Workshop — Wednesday 9am-12pm, $100</label>
         <label><input type="checkbox" name="npm"> npm Workshop — Wednesday 1pm-4pm, $100</label>
-                  	
       </fieldset>
       <fieldset>
         <legend>Payment Info</legend>
@@ -98,6 +97,8 @@
           <option value="paypal">PayPal</option>
           <option value="bitcoin">Bitcoin</option>
         </select>
+
+        <p class='is-hidden pay-msg'></p>
 
         <div id="credit-card" class="credit-card">
 
@@ -141,11 +142,11 @@
           </select> 	                  	         
         </div>
 
-        <div>
+        <div id="paypal">
         	<p>If you selected the PayPal option we'll take you to Paypal's site to set up your billing information, when you click “Register” below.</p>
         </div> 
 
-        <div>
+        <div id="bitcoin">
         	<p>If you selected the Bitcoin option we'll take you to the Coinbase site to set up your billing information. Due to the nature of exchanging Bitcoin, all Bitcoin transactions will be final.</p>
         </div>                  
 
