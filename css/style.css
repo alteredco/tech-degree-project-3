@@ -15,7 +15,7 @@ button {
 body {
   font: 1em/1.5;
   color: #535353;
-	background: #fefefe;
+	background-image: repeating-linear-gradient(-45deg,#fefefe, #aefcf1 1px, #fefefe 1px, #fefefe 8px);
 }
 
 header {

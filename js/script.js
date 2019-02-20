@@ -159,25 +159,25 @@ $('#other-title, #color, .total-calc, #paypal, #bitcoin').hide();
   //real-time validation of email field
   checkIfValid('#mail', '#errorMail', 1,'Please enter your email address', 'Please enter a valid email address', /^[^@]+@[^@.]+\.[a-z]+$/i);
   //real-time validation of credit card number field
-  checkIfValid('#cc-num', '#errorCcNum',1, 'Please enter your credit card details', 'Please enter a valid credit card number', /^(\d{13,16})?$/);
+  checkIfValid('#cc-num', '#errorCcNum',1, 'Please enter your credit card details', 'Please enter a number that is between 13 and 16 digits long', /^(\d{13,16})?$/);
   //real-time validation of zip code field
-  checkIfValid('#zip', '#errorZip',1,'Required','Invalid postcode', /^(\d{5})?$/);
+  checkIfValid('#zip', '#errorZip',1,'Required','Please enter a 5 digit number', /^(\d{5})?$/);
   //real-time validation of cvv field
-  checkIfValid('#cvv', '#errorCvv',1,'Required','Invalid number', /^(\d{3})?$/);
+  checkIfValid('#cvv', '#errorCvv',1,'Required','Please enter a 3 digit number', /^(\d{3})?$/);
 
 
   // form validation on submit
   $('form').submit(function(e) {
-    e.preventDefault();
 
     // function to check submitted fields
     function checkSubmit(input, num, errorMsg) {
       if($(input).val().length < num) {
         $(input).css({"border-color":"#fd8267"});
         $(errorMsg).show();
+        e.preventDefault();
       }
     }
-    
+
     // validate name field 
     checkSubmit('#name', 1, '#errorName')
     //validate email field 
@@ -185,14 +185,17 @@ $('#other-title, #color, .total-calc, #paypal, #bitcoin').hide();
     if(emailInput.length < 1) {
       $('#mail').css({"border-color":"#fd8267"});
       $('#errorMail').show();
+      e.preventDefault();
     } else if(!(emailInput).match(/^[^@]+@[^@.]+\.[a-z]+$/i)) {
         $('#errorMail').text('**Please enter a valid email**').show();
+        e.preventDefault();
     };
     //validate at least one activity is checked
     if($('.activities input:checked').length > 0) {
       $('#errorAct').hide();
     }else {
       $('#errorAct').show();
+      e.preventDefault();
     }
      //validate credit card fields 
     let ccNumInput = $('#cc-num').val();
@@ -200,9 +203,11 @@ $('#other-title, #color, .total-calc, #paypal, #bitcoin').hide();
       if(ccNumInput.length <1) {
         $('#cc-num').css({"border-color":"#fd8267"});
         $('#errorCcNum').text('**This field is required**').show();
+        e.preventDefault();
       }else if(ccNumInput.length <13) {
         $('#cc-num').css({"border-color":"#fd8267"});
         $('#errorCcNum').text('**Please enter a valid credit card**').show();
+        e.preventDefault();
       }
       checkSubmit('#zip', 5, '#errorZip');
       checkSubmit('#cvv',3,'#errorCvv');
