@@ -174,6 +174,7 @@ $('#other-title, #color, .total-calc, #paypal, #bitcoin').hide();
       if($(input).val().length < num) {
         $(input).css({"border-color":"#fd8267"});
         $(errorMsg).show();
+        // stops submit
         e.preventDefault();
       }
     }
