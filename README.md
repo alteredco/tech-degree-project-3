@@ -9,7 +9,6 @@ Clone the Repo to start:
 Git clone https://github.com/alteredco/tech-degree-project-3.git
 ______________
 # Features: 
-validating user input and providing helpful error messages when the user enters invalid information into the form fields.
 
 Within this project, the form is "progressively enhanced" with javascript to add customized and conditional behavior and interactivity. 
 
@@ -24,13 +23,13 @@ In the ”Activities” section if the user selects a workshop, conflicting work
 In the "Payment Info" section the "Credit Card" payment option is selected by default. Payment option in the select menu matches the payment option displayed on the page.
 
 If there are form validation errors, the user is prevented from submitting the form and an error message is displayed:
-*Name field can't be blank.
-*Email field must be a validly formatted e-mail address.
-*User must select at least one checkbox under the "Register for Activities" section of the form.
-*If the selected payment option is "Credit Card," user has supplied a Credit Card number, a Zip Code, and a 3 number CVV value.
-*Credit Card field only accepts a number between 13 and 16 digits.
-*The Zip Code field only accepts a 5-digit number.
-*The CVV only accepts a number that is exactly 3 digits long.
+* Name field can't be blank.
+* Email field must be a validly formatted e-mail address.
+* User must select at least one checkbox under the "Register for Activities" section of the form.
+* If the selected payment option is "Credit Card," user has supplied a Credit Card number, a Zip Code, and a 3 number CVV value.
+* Credit Card field only accepts a number between 13 and 16 digits.
+* The Zip Code field only accepts a 5-digit number.
+* The CVV only accepts a number that is exactly 3 digits long.
 
 **FOR EXCEEDS**
 T-shirt colors are hidden until a t-shirt design is chosen.
