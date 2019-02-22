@@ -40,9 +40,11 @@ $('#other-title, #color, .total-calc, #paypal, #bitcoin').hide();
       $('#color option:lt(3)').show();
       $('#color option').slice(-3).hide();
       $('.select-msg').hide();
+      $('#color').val('cornflowerblue');
     } else if($(this).val() === 'heart js') {
       $('#color option:lt(3), .select-msg').hide();
       $('#color option').slice(-3).show();
+      $('#color').val('tomato');
     } 
 
   });
@@ -59,55 +61,65 @@ $('#other-title, #color, .total-calc, #paypal, #bitcoin').hide();
     if(i === 0 ){
       $(this).addClass('main');
     } else if(i%2!=0) {
-      $(this).addClass('am');
+      $(this).addClass('tuesAm');
+      if(i===5){
+        $(this).removeClass('tuesAm');
+        $(this).addClass('wedAm');
+      }
     } else {
-      $(this).addClass('pm');
+      $(this).addClass('tuesPm');
+      if(i===6){
+        $(this).removeClass('tuesPm');
+        $(this).addClass('wedPm');
+      }
     }
   });
 
-   //  run calculation for main conference price
-  $('.main').on('click', function() {
-    if($('.main').is(':checked')===true) {
-     cost += 200;
-    } else if($('.main').is(':checked')===false && cost > 0) {
-       cost -= 200;
-    } 
+   //  Function for calculating conference price
+  function priceCalc(className, price) {
+    if($(className).is(':checked')===true) {
+      cost += price;
+    } else if($(className).is(':checked')===false && cost >0) {
+      cost -= price;
+    }
     $('.total-calc p').text(`Total Price: $ ${cost}`);
     $('.total-calc').show();
     $('#errorAct').hide();
+  }
+
+   //  run calculation for main conference price
+  $('.main').on('click', function() {
+    priceCalc('.main', 200);
    });
 
-   // Disable activities that are at the same time as morning activities
-  $('.am').on('click', function() {
-   $(":checkbox").not('.pm').prop("disabled", this.checked);
-   $(this).prop('disabled', false);
+   // Disable activities that are at the same time as tues morning activities
+  $('.tuesAm').on('click', function() {
+   $(':checkbox').not('.tuesPm, .wedAm, .wedPm').prop('disabled', this.checked);
    $('.main').prop('disabled',false);
-  //  run calculation for morning activity price
-   if($('.am').is(':checked')===true) {
-    cost += 100;
-   } else if($('.am').is(':checked')===false && cost > 0) {
-      cost -= 100;
-   } 
-   $('.total-calc p').text(`Total Price: $ ${cost}`);
-   $('.total-calc').show();
-   $('#errorAct').hide();
+   $(this).prop('disabled', false);
+  //  run calculation for tues morning activity price
+    priceCalc('.tuesAm', 100);
   });
 
-   // Disable activities that are at the same time as afternoon activities
-  $('.pm').on('click', function() {
-    $(':checkbox').not('.am').prop('disabled', this.checked);
-    $(this).prop('disabled', false);
+  // Disable activities that are at the same time as tues afternoon activities
+  $('.tuesPm').on('click', function() {
+    $(':checkbox').not('.tuesAm, .wedAm, .wedPm').prop('disabled', this.checked);
     $('.main').prop('disabled',false);
-    //  run calculation for afternoon activity price
-   if($('.pm').is(':checked')===true) {
-    cost += 100;
-   } else if($('.pm').is(':checked')===false && cost > 0) {
-    cost -= 100;
-   } 
-   $('.total-calc p').text(`Total Price: $ ${cost}`);
-   $('.total-calc').show();
-   $('#errorAct').hide();
+    $(this).prop('disabled', false);
+ 
+   //  run calculation for tues afternoon activity price
+    priceCalc('.tuesPm', 100);
+   });
+
+  $('.wedAm').on('click', function() {
+ //  run calculation for wed morning activity price
+    priceCalc('.wedAm', 100);
   });
+
+   $('.wedPm').on('click', function() {
+    //  run calculation for wed afternoon activity price
+      priceCalc('.wedPm', 100);
+    });
 
 //=========PAYMENT=========
   // When a user chooses a payment option, the chosen payment section is revealed and the other payment sections are hidden.
@@ -217,8 +229,7 @@ $('#other-title, #color, .total-calc, #paypal, #bitcoin').hide();
 
   // reset form error messages on new input
   $('#name, #mail, #cc-num, #zip, #cvv').on('click', function() {
-    $(this).val('').css({"border-color":"#679cb3", "color":"#184f68" });
-    hideErrorMsg();
+    $(this).css({"border-color":"#679cb3", "color":"#184f68" });
   });
 
 });
